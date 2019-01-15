@@ -12,15 +12,16 @@ router.post('/', (req, res, next) => {
   
     if (!username) {
     const err = new Error('Missing `User Name` in request body');
-    err.status = 400;
+    err.status = 422;
     return next(err);
     }
 
     if (!password) {
       const err = new Error('Missing `Password` in request body');
-      err.status = 400;
+      err.status = 422;
       return next(err);
     }
+    /*
     if (username.length < 1) {
         const err = new Error('User name must be atleast length 1')
         err.status = 422;
@@ -42,7 +43,7 @@ router.post('/', (req, res, next) => {
         return next(err)
     }
 
-
+*/
     return User.hashPassword(password)
     .then(digest => {
       const newUser = {
@@ -60,6 +61,7 @@ router.post('/', (req, res, next) => {
         err = new Error('The username already exists');
         err.status = 400;
       }
+      console.log(err.message);
       next(err);
     });
 
