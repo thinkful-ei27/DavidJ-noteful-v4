@@ -1,5 +1,5 @@
 const express = require('express');
-
+const passport = require('passport');
 const router = express.Router();
 
 /* ========== GET/READ ALL ITEMS ========== */
@@ -21,7 +21,7 @@ router.post('/', (req, res, next) => {
       err.status = 422;
       return next(err);
     }
-    /*
+    
     if (username.length < 1) {
         const err = new Error('User name must be atleast length 1')
         err.status = 422;
@@ -32,18 +32,18 @@ router.post('/', (req, res, next) => {
         err.status = 422;
         return next(err);
     }
-    if (username.length.trim() !== username.length) {
+    if (username.trim().length !== username.length) {
         const err = new Error('Username must not have any leading or trailing whitespaces')
         err.status = 422;
         return next(err)
     }
-    if (password.length.trim() !== password.length) {
+    if (password.trim().length !== password.length) {
         const err = new Error('Password must not have any leading or trailing whitespaces')
         err.status = 422;
         return next(err)
     }
 
-*/
+
     return User.hashPassword(password)
     .then(digest => {
       const newUser = {
