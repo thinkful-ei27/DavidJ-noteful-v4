@@ -11,8 +11,9 @@ router.use('/', passport.authenticate('jwt', { session: false, failWithError: tr
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
   const { searchTerm, folderId, tagId } = req.query;
+  const userId = req.user.id;
 
-  let filter = {};
+  let filter = {userId};
 
   if (searchTerm) {
     const re = new RegExp(searchTerm, 'i');
@@ -26,6 +27,7 @@ router.get('/', (req, res, next) => {
   if (tagId) {
     filter.tags = tagId;
   }
+
 
   Note.find(filter)
     .populate('tags')
