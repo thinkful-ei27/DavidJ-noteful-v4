@@ -14,9 +14,9 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Noteful API - Users', function () {
-  const username = 'exampleUser';
-  const password = 'examplePass';
-  const fullname = 'Example User';
+  const username = 'New User';
+  const password = 'password';
+  const fullname = 'David Johnson';
 
   before(function () {
     return mongoose.connect(TEST_MONGODB_URI, { useNewUrlParser: true, useCreateIndex : true })
@@ -35,7 +35,7 @@ describe('Noteful API - Users', function () {
     return mongoose.disconnect();
   });
 
-  describe('POST /api/users', function () {
+  describe.only('POST /api/users', function () {
 
     it('Should create a new user', function () {
       let res;
@@ -64,17 +64,157 @@ describe('Noteful API - Users', function () {
         });
     });
 
-    it('Should reject users with missing username');
-    it('Should reject users with missing password');
-    it('Should reject users with non-string username');
-    it('Should reject users with non-string password');
-    it('Should reject users with non-trimmed username');
-    it('Should reject users with non-trimmed password');
-    it('Should reject users with empty username');
-    it('Should reject users with password less than 8 characters');
-    it('Should reject users with password greater than 72 characters');
-    it('Should reject users with duplicate username');
-    it('Should trim fullname');
+    it('Should reject users with missing username', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({password})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+      })
+    });
+
+    it('Should reject users with missing password', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+      })
+    });
+
+    it('Should reject users with non-string username', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: 39393, password: "password"})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+      })
+    });
+
+    it('Should reject users with non-string password', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: "David", password: 333})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+        expect(res.body.message).to.equal("Unauthorized");
+      })
+    });
+
+    it('Should reject users with non-trimmed username', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: "David    ", password})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+        expect(res.body.message).to.equal("Unauthorized");
+      })
+    });
+
+    it('Should reject users with non-trimmed password', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: "David", password:"password      "})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+        expect(res.body.message).to.equal("Unauthorized");
+      })
+    });
+
+    it('Should reject users with empty username', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: "", password:"password"})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+        expect(res.body.message).to.equal("Unauthorized");
+      })
+    });
+
+    it('Should reject users with password less than 8 characters', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: "David", password:"pass"})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+        expect(res.body.message).to.equal("Unauthorized");
+      })
+    });
+
+    it('Should reject users with password greater than 72 characters', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: "David", password:"123456789123456789123456789123456789123456789123456789123456789123456789123456789123416546516516518541681684684864684874651465486169486"})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+        expect(res.body.message).to.equal("Unauthorized");
+      })
+    });
+
+    it('Should reject users with duplicate username', function () {
+ //Huhhhhhh??????
+    });
+
+    it('Should trim fullname', function () {
+      let res
+      return chai
+      .request(app)
+      .post('/api/login')
+      .send({username: "David", password:"password", fullname: "      David Johnson"})
+      .then(_res => {
+        res = _res;
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.key('name', 'message', 'status');
+        expect(res.body.message).to.equal("Unauthorized");
+      })
+    });
+
 
   });
 
