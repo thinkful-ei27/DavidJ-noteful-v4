@@ -62,6 +62,12 @@ router.post('/', (req, res, next) => {
     err.status = 400;
     return next(err);
   }
+  
+  // if (folderId && !mongoose.Types.ObjectId.isValid(folderId)) {
+  //   const err = new Error('The `folderId` is not valid');
+  //   err.status = 400;
+  //   return next(err);
+  // }
 
   Folder.create(newFolder)
     .then(result => {
