@@ -479,7 +479,7 @@ describe('Noteful API - Notes', function () {
           expect(res.body.title).to.equal(updateItem.title);
           expect(res.body.content).to.equal(data.content);
           expect(res.body.folderId).to.equal(data.folderId.toString());
-          expect(res.body.tags).to.equal(data.tags);
+          expect(res.body.tags).to.deep.equal(data.tags);
           expect(new Date(res.body.createdAt)).to.eql(data.createdAt);
           // expect note to have been updated
           expect(new Date(res.body.updatedAt)).to.greaterThan(data.updatedAt);
