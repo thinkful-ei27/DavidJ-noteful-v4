@@ -36,6 +36,7 @@ describe('Noteful API - Folders', function () {
   beforeEach(function () {
     return Promise.all([
       User.insertMany(users),
+      Note.insertMany(notes),
       Folder.insertMany(folders)
     ])
       .then(([users]) => {
