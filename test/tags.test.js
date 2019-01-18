@@ -63,7 +63,7 @@ describe('Noteful API - Tags', function () {
     return mongoose.disconnect();
   });
 
-  describe.only('GET /api/tags', function () {
+  describe('GET /api/tags', function () {
 
     it('should return the correct number of tags', function () {
       return Promise.all([
@@ -113,7 +113,7 @@ describe('Noteful API - Tags', function () {
 
   });
 
-  describe.only('GET /api/tags/:id', function () {
+  describe('GET /api/tags/:id', function () {
 
     it('should return correct tags', function () {
       let data;
@@ -171,7 +171,7 @@ describe('Noteful API - Tags', function () {
 
   });
 
-  describe.only('POST /api/tags', function () {
+  describe('POST /api/tags', function () {
 
     it('should create and return a new item when provided valid data', function () {
       const newItem = { name: 'newTag' };
@@ -260,7 +260,7 @@ describe('Noteful API - Tags', function () {
 
   });
 
-  describe.only('PUT /api/tags/:id', function () {
+  describe('PUT /api/tags/:id', function () {
 
     it('should update the tag', function () {
       const updateItem = { name: 'Updated Name' };
@@ -387,7 +387,7 @@ describe('Noteful API - Tags', function () {
 
   });
 
-  describe.only('DELETE /api/tags/:id', function () {
+  describe('DELETE /api/tags/:id', function () {
 
     it('should delete an existing tag and respond with 204', function () {
       let data;

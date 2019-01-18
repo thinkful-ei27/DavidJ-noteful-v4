@@ -35,7 +35,7 @@ describe('Noteful API - Users', function () {
     return mongoose.disconnect();
   });
 
-  describe.only('POST /api/users', function () {
+  describe('POST /api/users', function () {
 
     it('Should create a new user', function () {
       let res;
@@ -143,7 +143,7 @@ describe('Noteful API - Users', function () {
       })
      });
      });
-
+/*
      it('Should reject users with password less than 8 characters', function () {
       let res;
       return chai
@@ -200,4 +200,4 @@ describe('Noteful API - Users', function () {
       .then(_res => {
      }); 
 
-});
+});*/

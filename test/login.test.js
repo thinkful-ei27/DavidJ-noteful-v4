@@ -35,7 +35,7 @@ describe('Noteful API - Users', function () {
     return mongoose.disconnect();
   });
 
-  describe.only('POST /api/login', function () {
+  describe('POST /api/login', function () {
     
 
     it('it should create a user to login with, and then login with correct creditionals', function () {

@@ -63,7 +63,7 @@ describe('Noteful API - Notes', function () {
     return mongoose.disconnect();
   });
 
-  describe.only('GET /api/notes', function () {
+  describe('GET /api/notes', function () {
 
     it('should return the correct number of Notes', function () {
       return Promise.all([
@@ -223,7 +223,7 @@ describe('Noteful API - Notes', function () {
 
   });
 
-  describe.only('GET /api/notes/:id', function () {
+  describe('GET /api/notes/:id', function () {
 
     it('should return correct notes', function () {
       let data;
@@ -282,7 +282,7 @@ describe('Noteful API - Notes', function () {
 
   });
 
-  describe.only('POST /api/notes', function () {
+  describe('POST /api/notes', function () {
 
     it('should create and return a new item when provided valid title and content', function () {
       const newItem = {
@@ -455,7 +455,7 @@ describe('Noteful API - Notes', function () {
 
   });
 
-  describe.only('PUT /api/notes/:id', function () {
+  describe('PUT /api/notes/:id', function () {
 
     it('should update the note when provided a valid title', function () {
       const updateItem = {
@@ -479,7 +479,9 @@ describe('Noteful API - Notes', function () {
           expect(res.body.title).to.equal(updateItem.title);
           expect(res.body.content).to.equal(data.content);
           expect(res.body.folderId).to.equal(data.folderId.toString());
-          expect(res.body.tags).to.deep.equal(data.tags);
+          console.log(data.tags)
+          console.log(res.body.tags)
+          expect(res.body.tags).to.deep.equal(data.tags.map(id=> id.toString()));
           expect(new Date(res.body.createdAt)).to.eql(data.createdAt);
           // expect note to have been updated
           expect(new Date(res.body.updatedAt)).to.greaterThan(data.updatedAt);
@@ -508,7 +510,7 @@ describe('Noteful API - Notes', function () {
           expect(res.body.title).to.equal(data.title);
           expect(res.body.content).to.equal(updateItem.content);
           expect(res.body.folderId).to.equal(data.folderId.toString());
-          expect(res.body.tags).to.deep.equal(data.tags);
+          expect(res.body.tags).to.deep.equal(data.tags.map(id=> id.toString()));
           expect(new Date(res.body.createdAt)).to.eql(data.createdAt);
           // expect note to have been updated
           expect(new Date(res.body.updatedAt)).to.greaterThan(data.updatedAt);
@@ -537,7 +539,7 @@ describe('Noteful API - Notes', function () {
           expect(res.body.title).to.equal(data.title);
           expect(res.body.content).to.equal(data.content);
           expect(res.body.folderId).to.equal(updateItem.folderId);
-          expect(res.body.tags).to.deep.equal(data.tags);
+          expect(res.body.tags).to.deep.equal(data.tags.map(id=> id.toString()));
           expect(new Date(res.body.createdAt)).to.eql(data.createdAt);
           // expect note to have been updated
           expect(new Date(res.body.updatedAt)).to.greaterThan(data.updatedAt);
@@ -713,7 +715,7 @@ describe('Noteful API - Notes', function () {
 
   });
 
-  describe.only('DELETE /api/notes/:id', function () {
+  describe('DELETE /api/notes/:id', function () {
 
     it('should delete an existing document and respond with 204', function () {
       let data;
